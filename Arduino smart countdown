@@ -1,0 +1,42 @@
+Assignment 1 — Task 5: Smart Countdown
+// Combines: variables, a custom function, a while loop, LED output, Serial Monitor
+
+int startValue = 5;   // the number we count down from
+int ledPin = 13;       // built-in LED pin on the Arduino Uno
+
+// Custom function: blinks the LED a given number of times
+void flashLED(int times) {
+  int flashCount = 0;             // counts how many flashes have happened so far
+  while (flashCount < times) {    // keep flashing until we've done enough
+    digitalWrite(ledPin, HIGH);   // LED ON
+    delay(200);
+    digitalWrite(ledPin, LOW);    // LED OFF
+    delay(200);
+    flashCount = flashCount + 1;  // move to the next flash
+  }
+}
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);
+  delay(1000); // give the Serial connection a moment to establish
+
+  Serial.println("=== Smart Countdown Starting ===");
+
+  int count = startValue;
+  while (count > 0) {             // keep looping while count is still above 0
+    Serial.print("Count: ");
+    Serial.println(count);
+
+    flashLED(count);              // blink the LED 'count' times
+
+    delay(1000);                  // wait 1 second before the next number
+    count = count - 1;            // move to the next count down
+  }
+
+  Serial.println("=== Countdown Complete ===");
+}
+
+void loop() {
+  // Empty — everything happens once in setup()
+}
